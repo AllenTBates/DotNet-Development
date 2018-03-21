@@ -18,17 +18,32 @@ namespace MovieService.Controllers
         private MovieServiceContext db = new MovieServiceContext();
 
         // GET: api/Movies
-        public IQueryable<Movie> GetMovies()
+        public IQueryable<MovieDTO> GetMovies()
         {
-            return db.Movies;
+            var movies = from m in db.Movies
+                         select new MovieDTO()
+                         {
+                             Id = m.Id,
+                             Title = m.Title,
+                             DirectorName = m.Director.Name
+                         };
+            return movies;
         }
 
         // GET: api/Movies/5
-        [ResponseType(typeof(Movie))]
+        [ResponseType(typeof(MovieDetailDTO))]
         public async Task<IHttpActionResult> GetMovie(int id)
         {
-            Movie movie = await db.Movies.FindAsync(id);
-            if (movie == null)
+            var movie = await db.Movies.Include(m => m.Director).Select(m =>
+                new MovieDetailDTO()
+                {
+                    Id = m.Id,
+                    Title = m.Title,
+                    Year = m.Year,
+                    DirectorName = m.Director.Name,
+                    Genre = m.Genre
+                }).SingleOrDefaultAsync(b => b.Id == id);
+            if(movie == null)
             {
                 return NotFound();
             }
@@ -83,7 +98,16 @@ namespace MovieService.Controllers
             db.Movies.Add(movie);
             await db.SaveChangesAsync();
 
-            return CreatedAtRoute("DefaultApi", new { id = movie.Id }, movie);
+            db.Entry(movie).Reference(x => x.Director).Load();
+
+            var dto = new MovieDTO()
+            {
+                Id = movie.Id,
+                Title = movie.Title,
+                DirectorName = movie.Director.Name
+            };
+
+            return CreatedAtRoute("DefaultApi", new { id = movie.Id }, dto);
         }
 
         // DELETE: api/Movies/5

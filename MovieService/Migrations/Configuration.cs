@@ -43,7 +43,7 @@ namespace MovieService.Migrations
                     Id = 3,
                     Title = "The Dark Knight",
                     Year = 2008,
-                    DirectorId = 1,
+                    DirectorId = 3,
                     Genre = "Superhero"
                 },
                 new Movie()

@@ -17,6 +17,7 @@ namespace MovieService.Models
     
         public MovieServiceContext() : base("name=MovieServiceContext")
         {
+            this.Database.Log = s => System.Diagnostics.Debug.WriteLine(s);
         }
 
         public System.Data.Entity.DbSet<MovieService.Models.Director> Directors { get; set; }
