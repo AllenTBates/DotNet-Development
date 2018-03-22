@@ -15,6 +15,9 @@
         Year: ko.observable()
     }
 
+    self.newDirector = {
+        Name: ko.observable()
+    }
 
     self.getMovieDetail = function (item) {
         ajaxHelper(moviesUri + item.Id, 'GET').done(function (data) {
@@ -64,6 +67,16 @@
 
         ajaxHelper(moviesUri, 'POST', movie).done(function (item) {
             self.movies.push(item);
+        });
+    }
+
+    self.addDirector = function (formElement) {
+        var director = {
+            Name: self.newDirector.Name()
+        };
+
+        ajaxHelper(directorsUri, 'POST', director).done(function (item) {
+            self.directors.push(item);
         });
     }
 
