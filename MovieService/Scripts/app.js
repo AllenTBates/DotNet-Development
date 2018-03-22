@@ -21,6 +21,13 @@
             self.detail(data);
         });
     }
+    
+    self.deleteMovie = function (item) {
+        ajaxHelper(moviesUri + item.Id, 'DELETE').done(function (data) {
+            self.movies.remove(item);
+        });
+        
+    }
 
     function ajaxHelper(uri, method, data) {
         self.error(''); // Clear error message
