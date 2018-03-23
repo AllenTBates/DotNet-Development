@@ -1,6 +1,7 @@
 ﻿var ViewModel = function () {
     var self = this;
     self.detail = ko.observable();
+    self.selectedDirector = ko.observable();
     self.movies = ko.observableArray();
     self.directors = ko.observableArray();
     self.error = ko.observable();
@@ -29,7 +30,12 @@
         ajaxHelper(moviesUri + item.Id, 'DELETE').done(function (data) {
             self.movies.remove(item);
         });
-        
+    }
+
+    self.deleteDirector = function () {
+        ajaxHelper(directorsUri + self.selectedDirector().Id, 'DELETE').done(function (data) {
+            self.directors.remove(self.selectedDirector());
+        });
     }
 
     function ajaxHelper(uri, method, data) {

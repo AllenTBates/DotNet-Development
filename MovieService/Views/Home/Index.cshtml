@@ -3,7 +3,7 @@
 }
 
 <div class="page-header">
-    <h1>MovieService</h1>
+    <h1>Movie Service</h1>
 </div>
 
 <div class="row">
@@ -82,6 +82,8 @@
         </div>
     </div>
 
+    <!-- Add Director -->
+
     <div class="col-md-4">
         <div class="panel panel-default">
             <div class="panel-heading">
@@ -91,7 +93,7 @@
             <div class="panel-body">
                 <form class="form-horizontal" data-bind="submit: addDirector">
 
-                    <div class="form-group" data-bind="with: newMovie">
+                    <div class="form-group" data-bind="with: newDirector">
                         <label for="inputName" class="col-sm-2 control-label">Name</label>
                         <div class="col-sm-10">
                             <input type="text" class="form-control" id="inputName" data-bind="value:Name" />
@@ -103,4 +105,27 @@
             </div>
         </div>
     </div>
+
+    <!-- Delete Director -->
+    <div class="col-md-4">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h2 class="panel-title">Delete Director</h2>
+            </div>
+
+            <div class="panel-body">
+                <form class="form-horizontal" data-bind="submit: deleteDirector">
+
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">Director</label>
+                        <div class="col-sm-10">
+                            <select data-bind="options:directors, optionsText: 'Name', value: selectedDirector"></select>
+                        </div>
+                    </div>
+                    <button type="submit" class="btn btn-default">Delete</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
 </div>
