@@ -35,6 +35,10 @@
         });
     }
 
+    self.hideMovieDetail = function () {
+        self.detail(null);
+    }
+
     self.getEditMovieDetail = function (item) {
         ajaxHelper(moviesUri + item.Id, 'GET').done(function (data) {
             
@@ -46,7 +50,12 @@
             self.editView(true);
         });
     }
-    
+
+
+    self.closeEditView = function () {
+        self.editView(false);
+    }
+
     self.deleteMovie = function (item) {
         ajaxHelper(moviesUri + item.Id, 'DELETE').done(function (data) {
             self.movies.remove(item);
@@ -105,8 +114,10 @@
             Year: self.selectedMovie.Year(),
             Id: self.selectedMovie.Id()
         };
+        self.movies.replace(self.selectedMovie, movie);
 
         ajaxHelper(moviesUri + self.selectedMovie.Id(), 'PUT', movie).done(function (item) {
+            
             self.editView(false);
         });
 
